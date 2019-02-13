@@ -4,7 +4,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
 Examples:
 Function views
-    1. Add an import:  from my_app import views
+    1. Add an import:  from my_app import views 
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
 Class-based views
     1. Add an import:  from other_app.views import Home
@@ -14,24 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from blog.views import index, hello_times
-from blog.views import articles_by_year
-
-from django.urls import register_converter
-from blog.converters import FourDigitYearConverter
-from blog.converters import SlugUnicodeConverter
-
-register_converter(FourDigitYearConverter, 'year')
-register_converter(SlugUnicodeConverter, 'slug_unicode')
-
+from django.urls import include, path
 
 urlpatterns = [
-    path('articles/<year:year>/', articles_by_year),
+   path('admin/', admin.site.urls),
+   path('blog/', include('blog.urls')),
+   path('shop/', include('shop.urls')),
 
-    # re_path('^blog/1/$', post_detail),
-    # re_path('^blog/1/edit/$', post_edit),
-    path('admin/', admin.site.urls),
-    path ('blog/hello_times/<int:times>/', hello_times),
-    path('', index),
 ]

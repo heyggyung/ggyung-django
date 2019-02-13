@@ -20,8 +20,11 @@ from blog.views import articles_by_year
 
 from django.urls import register_converter
 from blog.converters import FourDigitYearConverter
+from blog.converters import SlugUnicodeConverter
 
 register_converter(FourDigitYearConverter, 'year')
+register_converter(SlugUnicodeConverter, 'slug_unicode')
+
 
 urlpatterns = [
     path('articles/<year:year>/', articles_by_year),

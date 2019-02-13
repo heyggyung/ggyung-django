@@ -1,5 +1,5 @@
 
-class FourDigitYearconverter:
+class FourDigitYearConverter:
     regex = r'2[01]\d{2}'
 
     def to_python(self, value):

@@ -1,6 +1,7 @@
 from django.urls import path
 from blog.views import index, hello_times, naver_realtime_keywords
 from blog.views import articles_by_year
+from blog.views import naver_blog_search
 
 from django.urls import register_converter
 from blog.converters import FourDigitYearConverter
@@ -19,5 +20,6 @@ urlpatterns = [
  
     path('hello_times/<int:times>/', hello_times),
     path('', index),
-    path('네이버실검', naver_realtime_keywords),
+    path('naver/네이버실검', naver_realtime_keywords),
+    path('naver/블로그검색', naver_blog_search),
 ]

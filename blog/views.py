@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-
+import requests 
+from bs4 import BeautifulSoup
 
 def articles_by_year(request, year):
     return HttpResponse(f'''
@@ -15,3 +16,11 @@ def index(request):
 def hello_times(request, times):
     message = "안녕하세요" * times
     return HttpResponse(message)
+
+def naver_realtime_keywords(request):
+    res = requests.get("http://naver.com")
+    html = res.text
+    soup = BeautifulSoup(html, 'html.parser')
+    tag_list = soup.select('.PM_CL_realtimeKeyword_rolling .ah_k')
+    text = '<br/>\n'.join([tag.text for tag in tag_list])
+    return HttpResponse(text)

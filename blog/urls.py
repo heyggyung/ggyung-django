@@ -1,6 +1,7 @@
 from django.urls import path
-from blog.views import index, hello_times, naver_realtime_keywords
+from blog.views import index, hello_times 
 from blog.views import articles_by_year
+from blog.views import naver_realtime_keywords
 from blog.views import naver_blog_search
 
 from django.urls import register_converter

@@ -8,3 +8,9 @@ def index(request):
     return render(request, 'shop/shop_list.html', {
         'shop_list':qs, 
     })
+
+def shop_detail(request, pk):
+    shop = ShopInfo.objects.get(pk=pk) # 즉시 DB에서 가져옴
+    return render(request, 'shop/shop_detail.html', {
+        'shop':shop,
+    })

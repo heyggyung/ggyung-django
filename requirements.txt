@@ -2,7 +2,7 @@ django~=2.1.0
 gunicorn
 requests
 beautifulsoup4
-pillo
+pillow
 django-debug-toolbar
 
 django-heroku

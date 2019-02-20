@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.urls import include, path
+from django.conf import settings
 
 def root(request):
     # TODO : URL reverse 기능
@@ -26,5 +27,11 @@ urlpatterns = [
    path('blog/', include('blog.urls')),
    path('shop/', include('shop.urls')),
    path('', root),
-
 ]
+
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

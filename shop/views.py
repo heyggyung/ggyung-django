@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import ShopInfo
 from .forms import ShopForm
 
@@ -31,9 +31,36 @@ def shop_new(request):
         'form' : form,
     })
 
+# 클래스 기반으로 new 함수 구현
 from django.views.generic import CreateView
 
 shop_new_cbv = CreateView.as_view(
+    model=ShopInfo, form_class=ShopForm,
+    template_name='shop/shop_form.html',
+    success_url='/shop/')
+
+
+def shop_edit(request, pk):
+#    shop = ShopInfo.objects.get(pk=pk)
+    shop = get_object_or_404(ShopInfo, pk=pk)
+    form_cls = ShopForm
+
+    if request.method == "POST":
+        form = form_cls(request.POST, request.FILES, instance=shop)
+        if form.is_valid():
+            shop = form.save()
+            return redirect('/shop/{}/' .format(shop.id))
+    else:
+        form = form_cls(instance=shop)
+
+    return render(request, 'shop/shop_form.html', {
+        'form' : form,
+    })
+
+
+from django.views.generic import UpdateView
+
+shop_edit_cbv = UpdateView.as_view(
     model=ShopInfo, form_class=ShopForm,
     template_name='shop/shop_form.html',
     success_url='/shop/')

@@ -6,7 +6,7 @@
             {% for shop in shop_list %}
                 <div class="col-sm-4 mb-3">
                     <div class="card">
-                        <img src="https://mblogthumb-phinf.pstatic.net/20150701_201/whdrnr95_1435721605440cJvNE_JPEG/DSC_0035.jpg?type=w2" class="card-img-top" alt="...">
+                        <a href= "/shop/{{shop.id}}"> <img src="http://newsimg.hankookilbo.com/2016/04/13/201604131460701467_1.jpg" class="card-img-top" alt="..."></a>
                         <div class="card-body">
                         <h5 class="card-title">
                         #{{ shop.id }}. {{ shop.name }}
@@ -14,7 +14,6 @@
                         {% if shop.address %}
                         <p class="card-text">
                             {{ shop.address }}
-                        </p>
                         {% endif %}
                         {% if shop.desc %}
                         <p class="card-text">
@@ -32,5 +31,5 @@
             {% endfor %}
         </div>
     </div>
-    
+
 {% endblock %}

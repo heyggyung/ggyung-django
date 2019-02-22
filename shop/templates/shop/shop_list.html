@@ -6,10 +6,12 @@
             {% for shop in shop_list %}
                 <div class="col-sm-4 mb-3">
                     <div class="card">
-                        <a href= "/shop/{{shop.id}}"> <img src="http://newsimg.hankookilbo.com/2016/04/13/201604131460701467_1.jpg" class="card-img-top" alt="..."></a>
+                        <img src="http://newsimg.hankookilbo.com/2016/04/13/201604131460701467_1.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                         <h5 class="card-title">
-                        #{{ shop.id }}. {{ shop.name }}
+                            <a href="{% url "shop:shop_detail" shop.id %}">
+                                #{{ shop.id }}. {{ shop.name }}
+                            </a>
                         </h5>
                         {% if shop.address %}
                         <p class="card-text">
@@ -31,7 +33,7 @@
             {% endfor %}
         </div>
 
-        <a href="/shop/new" class="btn btn-primary">새 가게 등록 </a>
+        <a href="{% url "shop:shop_new" %}" class="btn btn-primary">새 가게 등록 </a>
    
     </div>
 

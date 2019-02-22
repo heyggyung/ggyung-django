@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class ShopInfo(models.Model):
@@ -12,6 +13,10 @@ class ShopInfo(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        # return "/shop/{}/".format(self.id)
+        return reverse("shop:shop_detail", args=[self.id])
+        # return reverse("shop:shop_detail", kwargs={'pk': self.id})
 
 class Item(models.Model):
     shop = models.ForeignKey(ShopInfo, on_delete=models.CASCADE)

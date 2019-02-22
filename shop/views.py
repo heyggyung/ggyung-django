@@ -39,7 +39,9 @@ def shop_new(request):
     if request.method == "POST":
         form = form_cls(request.POST, request.FILES)
         if form.is_valid():
-            shop = form.save()
+            shop = form.save(commit=False)
+            shop.user = request.user
+            shop.save()
             return redirect(shop)
     else:
         form = form_cls()
@@ -52,6 +54,10 @@ def shop_new(request):
 def shop_edit(request, pk):
 #    shop = ShopInfo.objects.get(pk=pk)
     shop = get_object_or_404(ShopInfo, pk=pk)
+  
+    if request.user != shop.user:
+        return redirect(shop)
+
     form_cls = ShopForm
 
     if request.method == "POST":
@@ -69,13 +75,16 @@ def shop_edit(request, pk):
 @login_required
 def shop_delete(request, pk):
     shop = get_object_or_404(ShopInfo, pk=pk)
+  
+    if request.user != shop.user:
+        return redirect(shop)
 
     if request.method == 'POST':
         shop.delete()
         return redirect('shop:index')
 
     return render(request, 'shop/shop_confirm_delete.html', {
-        'shop': ShopInfo, 
+        'shop': ShopInfo,
     })
 
 

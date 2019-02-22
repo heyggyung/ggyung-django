@@ -4,7 +4,7 @@ from .models import ShopInfo, Item
 # Register your models here.
 @admin.register(ShopInfo)
 class ShopInfoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'address', 'created_at']
+    list_display = ['id', 'name', 'address', 'created_at', 'user']
     list_display_links = ['name']
 
 

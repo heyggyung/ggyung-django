@@ -14,16 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.http import HttpResponseRedirect
+from django.conf.urls.static import static
+# from django.http import HttpResponseRedirect
 from django.urls import include, path
 from django.conf import settings
+from django.shortcuts import redirect
 
 def root(request):
-    # TODO : URL reverse 기능
-    return HttpResponseRedirect('/blog/')
+    # TO DO : URL reverse 기능
+    # return HttpResponseRedirect('/blog/')
+    return redirect('shop:index')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
     path('blog/', include('blog.urls')),
     path('shop/', include('shop.urls')),
     path('', root),
@@ -35,3 +40,6 @@ if settings.DEBUG:
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
     ]
+
+
+#urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

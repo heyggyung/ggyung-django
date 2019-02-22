@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView, DetailView, DeleteView
 from .models import ShopInfo
@@ -31,6 +32,7 @@ from .forms import ShopForm
 #         'shop':shop,
 #     })
 
+@login_required
 def shop_new(request):
     form_cls = ShopForm
 
@@ -46,6 +48,7 @@ def shop_new(request):
         'form' : form,
     })
 
+@login_required
 def shop_edit(request, pk):
 #    shop = ShopInfo.objects.get(pk=pk)
     shop = get_object_or_404(ShopInfo, pk=pk)
@@ -63,16 +66,17 @@ def shop_edit(request, pk):
         'form' : form,
     })
 
-# def shop_delete(request, pk):
-#     shop = get_object_or_404(ShopInfo, pk=pk)
+@login_required
+def shop_delete(request, pk):
+    shop = get_object_or_404(ShopInfo, pk=pk)
 
-#     if request.method == 'POST':
-#         shop.delete()
-#         return redirect('shop:index')
+    if request.method == 'POST':
+        shop.delete()
+        return redirect('shop:index')
 
-#     return render(request, 'shop/shop_confirm_delete.html', {
-#         'shop': ShopInfo,
-#     })
+    return render(request, 'shop/shop_confirm_delete.html', {
+        'shop': ShopInfo, 
+    })
 
 
 # 클래스 기반으로 view, detail 함수 구현
@@ -80,14 +84,14 @@ index = ListView.as_view(model=ShopInfo,
                          context_object_name='shop_list',
                          template_name='shop/shop_list.html')
 
-shop_detail = DetailView.as_view(model=ShopInfo, 
+shop_detail = DetailView.as_view(model=ShopInfo,
                          context_object_name='shop',
                          template_name='shop/shop_detail.html')
 
-shop_delete = DeleteView.as_view(model=ShopInfo,
-                         context_object_name='shop',
-                         template_name='shop/shop_confirm_delete.html',
-                         success_url=reverse_lazy('shop:index'))
+# shop_delete = DeleteView.as_view(model=ShopInfo,
+#                          context_object_name='shop',
+#                          template_name='shop/shop_confirm_delete.html',
+#                          success_url=reverse_lazy('shop:index'))
 
 # 클래스 기반으로 new, edit 함수 구현
 shop_new_cbv = CreateView.as_view(
